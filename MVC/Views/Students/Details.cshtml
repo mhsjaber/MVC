@@ -10,33 +10,26 @@
 <div>
     <h4>Student</h4>
     <hr />
-    @if (ViewBag.Message != null)
-    {
-        <h3>@ViewBag.Message</h3>
-    }
-    else
-    {
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Department.DepartName)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Department.DepartName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Department.DepartName)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Department.DepartName)
+        </dd>
 
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-    }
+    </dl>
 </div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

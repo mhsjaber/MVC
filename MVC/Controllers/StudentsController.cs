@@ -31,8 +31,7 @@ namespace MVC.Controllers
             Student student = db.Students.Find(id);
             if (student == null)
             {
-                ViewBag.Message = "No student found!";
-                return View();
+                return HttpNotFound();
             }
             return View(student);
         }
