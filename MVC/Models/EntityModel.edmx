@@ -1,0 +1,814 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GarmentsManagementModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BuyerDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar(max)" />
+          <Property Name="CompanyAddress" Type="nvarchar(max)" />
+          <Property Name="CompanyDetails" Type="nvarchar(max)" />
+          <Property Name="ContactPersonName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPersonMobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactPersonDetails" Type="nvarchar(max)" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpDesignations">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmpDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="EmployeeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="DesignationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FabricDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FabricName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FabricCode" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FabricStockOperation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FabricId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="float" Nullable="false" />
+          <Property Name="Purpose" Type="nvarchar(max)" />
+          <Property Name="OperationDate" Type="date" Nullable="false" />
+          <Property Name="OperationType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Label" Type="nvarchar" MaxLength="50" />
+          <Property Name="Controller" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Method" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemUsers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemUserTasks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TaskId" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BuyerDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="BuyerDetails" Type="Self.BuyerDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BuyerDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDesignations_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="EmpDesignations" Type="Self.EmpDesignations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDesignations">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDetails_EmpDesignations">
+          <End Role="EmpDesignations" Type="Self.EmpDesignations" Multiplicity="0..1" />
+          <End Role="EmpDetails" Type="Self.EmpDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpDesignations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="EmpDetails" Type="Self.EmpDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="FabricDetails" Type="Self.FabricDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricStockOperation_FabricDetails">
+          <End Role="FabricDetails" Type="Self.FabricDetails" Multiplicity="1" />
+          <End Role="FabricStockOperation" Type="Self.FabricStockOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FabricDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricStockOperation">
+              <PropertyRef Name="FabricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricStockOperation_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="FabricStockOperation" Type="Self.FabricStockOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricStockOperation">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemTasks_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="1" />
+          <End Role="SystemTasks" Type="Self.SystemTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUsers_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="SystemUsers1" Type="Self.SystemUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUsers1">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemTasks">
+          <End Role="SystemTasks" Type="Self.SystemTasks" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemUsers1">
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTasks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GarmentsManagementModelStoreContainer">
+          <EntitySet Name="BuyerDetails" EntityType="Self.BuyerDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpDesignations" EntityType="Self.EmpDesignations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpDetails" EntityType="Self.EmpDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FabricDetails" EntityType="Self.FabricDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FabricStockOperation" EntityType="Self.FabricStockOperation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemTasks" EntityType="Self.SystemTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUsers" EntityType="Self.SystemUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemUserTasks" EntityType="Self.SystemUserTasks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BuyerDetails_SystemUsers" Association="Self.FK_BuyerDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="BuyerDetails" EntitySet="BuyerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDesignations_SystemUsers" Association="Self.FK_EmpDesignations_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="EmpDesignations" EntitySet="EmpDesignations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDetails_EmpDesignations" Association="Self.FK_EmpDetails_EmpDesignations">
+            <End Role="EmpDesignations" EntitySet="EmpDesignations" />
+            <End Role="EmpDetails" EntitySet="EmpDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDetails_SystemUsers" Association="Self.FK_EmpDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="EmpDetails" EntitySet="EmpDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricDetails_SystemUsers" Association="Self.FK_FabricDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="FabricDetails" EntitySet="FabricDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricStockOperation_FabricDetails" Association="Self.FK_FabricStockOperation_FabricDetails">
+            <End Role="FabricDetails" EntitySet="FabricDetails" />
+            <End Role="FabricStockOperation" EntitySet="FabricStockOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricStockOperation_SystemUsers" Association="Self.FK_FabricStockOperation_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="FabricStockOperation" EntitySet="FabricStockOperation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemTasks_SystemUsers" Association="Self.FK_SystemTasks_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemTasks" EntitySet="SystemTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUsers_SystemUsers" Association="Self.FK_SystemUsers_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUsers1" EntitySet="SystemUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemTasks" Association="Self.FK_SystemUserTasks_SystemTasks">
+            <End Role="SystemTasks" EntitySet="SystemTasks" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemUsers" Association="Self.FK_SystemUserTasks_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemUsers1" Association="Self.FK_SystemUserTasks_SystemUsers1">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GarmentsManagementModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BuyerDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CompanyDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonMobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_BuyerDetails_SystemUsers" FromRole="BuyerDetails" ToRole="SystemUsers" />
+        </EntityType>
+        <EntityType Name="EmpDesignation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_EmpDesignations_SystemUsers" FromRole="EmpDesignations" ToRole="SystemUsers" />
+          <NavigationProperty Name="EmpDetails" Relationship="Self.FK_EmpDetails_EmpDesignations" FromRole="EmpDesignations" ToRole="EmpDetails" />
+        </EntityType>
+        <EntityType Name="EmpDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="DesignationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmpDesignation" Relationship="Self.FK_EmpDetails_EmpDesignations" FromRole="EmpDetails" ToRole="EmpDesignations" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_EmpDetails_SystemUsers" FromRole="EmpDetails" ToRole="SystemUsers" />
+        </EntityType>
+        <EntityType Name="FabricDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FabricName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FabricCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_FabricDetails_SystemUsers" FromRole="FabricDetails" ToRole="SystemUsers" />
+          <NavigationProperty Name="FabricStockOperations" Relationship="Self.FK_FabricStockOperation_FabricDetails" FromRole="FabricDetails" ToRole="FabricStockOperation" />
+        </EntityType>
+        <EntityType Name="FabricStockOperation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FabricId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Double" Nullable="false" />
+          <Property Name="Purpose" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OperationDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OperationType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FabricDetail" Relationship="Self.FK_FabricStockOperation_FabricDetails" FromRole="FabricStockOperation" ToRole="FabricDetails" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_FabricStockOperation_SystemUsers" FromRole="FabricStockOperation" ToRole="SystemUsers" />
+        </EntityType>
+        <EntityType Name="SystemTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Controller" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemTasks_SystemUsers" FromRole="SystemTasks" ToRole="SystemUsers" />
+          <NavigationProperty Name="SystemUserTasks" Relationship="Self.FK_SystemUserTasks_SystemTasks" FromRole="SystemTasks" ToRole="SystemUserTasks" />
+        </EntityType>
+        <EntityType Name="SystemUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BuyerDetails" Relationship="Self.FK_BuyerDetails_SystemUsers" FromRole="SystemUsers" ToRole="BuyerDetails" />
+          <NavigationProperty Name="EmpDesignations" Relationship="Self.FK_EmpDesignations_SystemUsers" FromRole="SystemUsers" ToRole="EmpDesignations" />
+          <NavigationProperty Name="EmpDetails" Relationship="Self.FK_EmpDetails_SystemUsers" FromRole="SystemUsers" ToRole="EmpDetails" />
+          <NavigationProperty Name="FabricDetails" Relationship="Self.FK_FabricDetails_SystemUsers" FromRole="SystemUsers" ToRole="FabricDetails" />
+          <NavigationProperty Name="FabricStockOperations" Relationship="Self.FK_FabricStockOperation_SystemUsers" FromRole="SystemUsers" ToRole="FabricStockOperation" />
+          <NavigationProperty Name="SystemTasks" Relationship="Self.FK_SystemTasks_SystemUsers" FromRole="SystemUsers" ToRole="SystemTasks" />
+          <NavigationProperty Name="SystemUsers1" Relationship="Self.FK_SystemUsers_SystemUsers" FromRole="SystemUsers" ToRole="SystemUsers1" />
+          <NavigationProperty Name="SystemUser1" Relationship="Self.FK_SystemUsers_SystemUsers" FromRole="SystemUsers1" ToRole="SystemUsers" />
+          <NavigationProperty Name="SystemUserTasks" Relationship="Self.FK_SystemUserTasks_SystemUsers" FromRole="SystemUsers" ToRole="SystemUserTasks" />
+          <NavigationProperty Name="SystemUserTasks1" Relationship="Self.FK_SystemUserTasks_SystemUsers1" FromRole="SystemUsers" ToRole="SystemUserTasks" />
+        </EntityType>
+        <EntityType Name="SystemUserTask">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="TaskId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SystemTask" Relationship="Self.FK_SystemUserTasks_SystemTasks" FromRole="SystemUserTasks" ToRole="SystemTasks" />
+          <NavigationProperty Name="SystemUser" Relationship="Self.FK_SystemUserTasks_SystemUsers" FromRole="SystemUserTasks" ToRole="SystemUsers" />
+          <NavigationProperty Name="SystemUser1" Relationship="Self.FK_SystemUserTasks_SystemUsers1" FromRole="SystemUserTasks" ToRole="SystemUsers" />
+        </EntityType>
+        <Association Name="FK_BuyerDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="BuyerDetails" Type="Self.BuyerDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BuyerDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDesignations_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="EmpDesignations" Type="Self.EmpDesignation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDesignations">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDetails_EmpDesignations">
+          <End Role="EmpDesignations" Type="Self.EmpDesignation" Multiplicity="0..1" />
+          <End Role="EmpDetails" Type="Self.EmpDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmpDesignations">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="EmpDetails" Type="Self.EmpDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmpDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricDetails_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="FabricDetails" Type="Self.FabricDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricDetails">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricStockOperation_FabricDetails">
+          <End Role="FabricDetails" Type="Self.FabricDetail" Multiplicity="1" />
+          <End Role="FabricStockOperation" Type="Self.FabricStockOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FabricDetails">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricStockOperation">
+              <PropertyRef Name="FabricId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FabricStockOperation_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="FabricStockOperation" Type="Self.FabricStockOperation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FabricStockOperation">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemTasks_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemTasks" Type="Self.SystemTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemTasks">
+          <End Role="SystemTasks" Type="Self.SystemTask" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemTasks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUsers_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="SystemUsers1" Type="Self.SystemUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUsers1">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemUsers">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SystemUserTasks_SystemUsers1">
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemUserTasks" Type="Self.SystemUserTask" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SystemUserTasks">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GarmentsManagementEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BuyerDetails" EntityType="Self.BuyerDetail" />
+          <EntitySet Name="EmpDesignations" EntityType="Self.EmpDesignation" />
+          <EntitySet Name="EmpDetails" EntityType="Self.EmpDetail" />
+          <EntitySet Name="FabricDetails" EntityType="Self.FabricDetail" />
+          <EntitySet Name="FabricStockOperations" EntityType="Self.FabricStockOperation" />
+          <EntitySet Name="SystemTasks" EntityType="Self.SystemTask" />
+          <EntitySet Name="SystemUsers" EntityType="Self.SystemUser" />
+          <EntitySet Name="SystemUserTasks" EntityType="Self.SystemUserTask" />
+          <AssociationSet Name="FK_BuyerDetails_SystemUsers" Association="Self.FK_BuyerDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="BuyerDetails" EntitySet="BuyerDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDesignations_SystemUsers" Association="Self.FK_EmpDesignations_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="EmpDesignations" EntitySet="EmpDesignations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDetails_EmpDesignations" Association="Self.FK_EmpDetails_EmpDesignations">
+            <End Role="EmpDesignations" EntitySet="EmpDesignations" />
+            <End Role="EmpDetails" EntitySet="EmpDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpDetails_SystemUsers" Association="Self.FK_EmpDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="EmpDetails" EntitySet="EmpDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricDetails_SystemUsers" Association="Self.FK_FabricDetails_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="FabricDetails" EntitySet="FabricDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricStockOperation_FabricDetails" Association="Self.FK_FabricStockOperation_FabricDetails">
+            <End Role="FabricDetails" EntitySet="FabricDetails" />
+            <End Role="FabricStockOperation" EntitySet="FabricStockOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FabricStockOperation_SystemUsers" Association="Self.FK_FabricStockOperation_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="FabricStockOperation" EntitySet="FabricStockOperations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemTasks_SystemUsers" Association="Self.FK_SystemTasks_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemTasks" EntitySet="SystemTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemTasks" Association="Self.FK_SystemUserTasks_SystemTasks">
+            <End Role="SystemTasks" EntitySet="SystemTasks" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUsers_SystemUsers" Association="Self.FK_SystemUsers_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUsers1" EntitySet="SystemUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemUsers" Association="Self.FK_SystemUserTasks_SystemUsers">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SystemUserTasks_SystemUsers1" Association="Self.FK_SystemUserTasks_SystemUsers1">
+            <End Role="SystemUsers" EntitySet="SystemUsers" />
+            <End Role="SystemUserTasks" EntitySet="SystemUserTasks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GarmentsManagementModelStoreContainer" CdmEntityContainer="GarmentsManagementEntities">
+          <EntitySetMapping Name="BuyerDetails">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.BuyerDetail">
+              <MappingFragment StoreEntitySet="BuyerDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="CompanyDetails" ColumnName="CompanyDetails" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="ContactPersonMobile" ColumnName="ContactPersonMobile" />
+                <ScalarProperty Name="ContactPersonDetails" ColumnName="ContactPersonDetails" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpDesignations">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.EmpDesignation">
+              <MappingFragment StoreEntitySet="EmpDesignations">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpDetails">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.EmpDetail">
+              <MappingFragment StoreEntitySet="EmpDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FabricDetails">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.FabricDetail">
+              <MappingFragment StoreEntitySet="FabricDetails">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FabricName" ColumnName="FabricName" />
+                <ScalarProperty Name="FabricCode" ColumnName="FabricCode" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FabricStockOperations">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.FabricStockOperation">
+              <MappingFragment StoreEntitySet="FabricStockOperation">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FabricId" ColumnName="FabricId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Purpose" ColumnName="Purpose" />
+                <ScalarProperty Name="OperationDate" ColumnName="OperationDate" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemTasks">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.SystemTask">
+              <MappingFragment StoreEntitySet="SystemTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Label" ColumnName="Label" />
+                <ScalarProperty Name="Controller" ColumnName="Controller" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUsers">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.SystemUser">
+              <MappingFragment StoreEntitySet="SystemUsers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemUserTasks">
+            <EntityTypeMapping TypeName="GarmentsManagementModel.SystemUserTask">
+              <MappingFragment StoreEntitySet="SystemUserTasks">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="TaskId" ColumnName="TaskId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
