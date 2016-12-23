@@ -230,6 +230,7 @@
     <Compile Include="Models\FabricStockOperation.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PartialSystemUsers.cs" />
     <Compile Include="Models\SystemTask.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>

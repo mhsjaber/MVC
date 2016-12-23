@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/css")
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         @Scripts.Render("~/bundles/modernizr")
         @Scripts.Render("~/bundles/jquery")
 
@@ -19,7 +20,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <header class="main-header">
-            <a href="index2.html" class="logo">
+            <a href="@Url.Action("Index", "Home")" class="logo">
                 <span class="logo-mini"><b>H</b>MS</span>
                 <span class="logo-lg"><b>Hotel </b>Management</span>
             </a>
@@ -86,6 +87,11 @@
                             <i class="fa fa-info"></i> <span>About</span>
                         </a>
                     </li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "SystemUsers")">
+                            <i class="fa fa-users"></i> <span>Users</span>
+                        </a>
+                    </li>
                 </ul>
             </section>
         </aside>
@@ -106,6 +112,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
 
 
         @Scripts.Render("~/bundles/bootstrap")
