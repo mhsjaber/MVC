@@ -1,28 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using MVC.Models;
-using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace MVC.Controllers
 {
     public class SystemUsersController : Controller
     {
         private GarmentsManagementEntities2 db = new GarmentsManagementEntities2();
-
-        // GET: SystemUsers
+        
         public ActionResult Index()
         {
             var systemUsers = db.SystemUsers.Include(s => s.SystemUser1);
             return View(systemUsers.ToList());
         }
-
-        // GET: SystemUsers/Details/5
+        
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,29 +34,31 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Email,Password,FullName,UpdateDate,UpdatedBy,Status")] SystemUser systemUser)
         {
             try
             {
+                Regex rgx = new Regex("[^a-zA-Z0-9 - .]");
+                systemUser.FullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(rgx.Replace(systemUser.FullName, "").ToLower());
+                systemUser.Email = systemUser.Email.ToLower();
                 systemUser.UpdateDate = DateTime.Now;
-                systemUser.UpdatedBy = 1;
+                systemUser.UpdatedBy = null;
                 systemUser.Status = 1;
 
                 if (ModelState.IsValid)
                 {
                     db.SystemUsers.Add(systemUser);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return Json(1);
                 }
                 else
                 {
-                    return Json(1);
+                    return Json(2);
                 }
             }
-            catch (SqlException e)
-            {
-                return Json(e.Number);
+            catch (Exception e) {
+
+                return Json(e.Message);
             }
         }
 
