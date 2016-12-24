@@ -7,12 +7,13 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC.Models;
+using System.Data.SqlClient;
 
 namespace MVC.Controllers
 {
     public class SystemUsersController : Controller
     {
-        private GarmentsManagementEntities db = new GarmentsManagementEntities();
+        private GarmentsManagementEntities2 db = new GarmentsManagementEntities2();
 
         // GET: SystemUsers
         public ActionResult Index()
@@ -36,29 +37,31 @@ namespace MVC.Controllers
             return View(systemUser);
         }
 
-        // GET: SystemUsers/Create
-        public ActionResult Create()
-        {
-            ViewBag.UpdatedBy = new SelectList(db.SystemUsers, "Id", "UserName");
-            return View();
-        }
-
-        // POST: SystemUsers/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserName,Password,FullName,UpdateDate,UpdatedBy,Status")] SystemUser systemUser)
+        public ActionResult Create([Bind(Include = "Id,Email,Password,FullName,UpdateDate,UpdatedBy,Status")] SystemUser systemUser)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.SystemUsers.Add(systemUser);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                systemUser.UpdateDate = DateTime.Now;
+                systemUser.UpdatedBy = 1;
+                systemUser.Status = 1;
 
-            ViewBag.UpdatedBy = new SelectList(db.SystemUsers, "Id", "UserName", systemUser.UpdatedBy);
-            return View(systemUser);
+                if (ModelState.IsValid)
+                {
+                    db.SystemUsers.Add(systemUser);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return Json(1);
+                }
+            }
+            catch (SqlException e)
+            {
+                return Json(e.Number);
+            }
         }
 
         // GET: SystemUsers/Edit/5

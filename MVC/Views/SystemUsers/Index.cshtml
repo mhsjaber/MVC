@@ -26,10 +26,10 @@
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.UserName)
+                                        @Html.DisplayNameFor(model => model.FullName)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.FullName)
+                                        @Html.DisplayNameFor(model => model.Email)
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.UpdateDate)
@@ -50,10 +50,10 @@
                                 {
                                 <tr>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.UserName)
+                                        @Html.DisplayFor(modelItem => item.FullName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.FullName)
+                                        @Html.DisplayFor(modelItem => item.Email)
                                     </td>
                                     <td>
                                         @if (item.UpdateDate.HasValue)
@@ -78,7 +78,7 @@
                                     <td>
                                         @if (item.UpdatedBy.HasValue)
                                             {
-                                            @Html.DisplayFor(modelItem => item.SystemUser1.UserName)
+                                            @Html.DisplayFor(modelItem => item.SystemUser1.Email)
                                             }
                                             else
                                             {
@@ -86,7 +86,7 @@
                                             }
                                     </td>
                                     <td>
-                                        @Html.Raw(string.Format("<label class='label label-primary' onclick='UpdateModel(" + item.Id + ")'>Update</label>"))
+                                        @Html.Raw(string.Format("<label class='label label-primary' onclick='UpdateModel(" + item.Id + ")'>Update</label> <label class='label label-primary' onclick='ShowTasks(" + item.Id + ")'>Tasks</label>"))
                                     </td>
                                 </tr>
                                 }
@@ -106,10 +106,24 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Add User</h4>
             </div>
-            <form class="form-horizontal" action="/SystemUsers/Create" method="post" id="add-form">
+            <form class="form-horizontal" id="add-form">
                 <div class="modal-body">
                     <fieldset>
                         @Html.AntiForgeryToken()
+
+                        <div class="form-group" style="text-align:center">
+                            <img id="img-add" class="image img-view" src="~/Content/Images/Users/user.png"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Image</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="btn btn-default btn-file">
+                                        Browse Image <input type="file" name="Image" id="image-add">
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Full Name</label>
                             <div class="col-md-8 inputGroupContainer">
@@ -120,11 +134,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Username</label>
+                            <label class="col-md-3 control-label">E-mail</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="UserName" placeholder="Username" class="form-control" type="text">
+                                    <input name="Email" placeholder="E-mail" class="form-control" type="email">
                                 </div>
                             </div>
                         </div>
@@ -141,7 +155,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" >Save</button>
+                    <button type="button" class="btn btn-primary" id="add-button">Save</button>
                 </div>
             </form>
         </div>
@@ -163,7 +177,30 @@
     }
 
     $(document).ready(function () {
-        $('#add-form').bootstrapValidator({
+        $("#add-button").click(function () {
+
+            var validator = $('#add-form').data('bootstrapValidator');
+            validator.validate();
+            if (validator.isValid()) {
+
+                var data1 = $('#add-form').serialize();
+                $.ajax({
+                    type: "POST",
+                    url: '/SystemUsers/Create',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    data: data1,
+                    success: function (x) {
+                        console.log(x);
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+
+        var validate = $('#add-form').bootstrapValidator({
             feedbackIcons: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -180,7 +217,18 @@
                         }
                     }
                 },
-                UserName: {
+
+                Image: {
+                    validators: {
+                        file: {
+                            extension: 'jpeg,jpg,png',
+                            type: 'image/jpeg,image/png',
+                            message: 'Invalid image type. Please supply jpeg/jpg or png type image.'
+                        }
+                    }
+                },
+
+                Email: {
                     validators: {
                         stringLength: {
                             min: 5,
@@ -205,21 +253,27 @@
         .on('success.form.bv', function (e) {
                 $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
                 $('#reg_form').data('bootstrapValidator').resetForm();
-
-                // Prevent form submission
                 e.preventDefault();
-
-                // Get the form instance
                 var $form = $(e.target);
-
-                // Get the BootstrapValidator instance
                 var bv = $form.data('bootstrapValidator');
-
-                // Use Ajax to submit form data
                 $.post($form.attr('action'), $form.serialize(), function (result) {
                     console.log(result);
                 }, 'json');
             });
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#img-add').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image-add").change(function () {
+        readURL(this);
     });
 
 

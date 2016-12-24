@@ -17,8 +17,8 @@ namespace MVC.Models
         [Display(Name = "Full Name")]
         public string FullName { get; set; }
 
-        [Display(Name = "User Name")]
-        public string UserName { get; set; }
+        [Display(Name = "E-mail")]
+        public string Email { get; set; }
 
         [Display(Name = "Last Update")]
         public DateTime? UpdateDate { get; set; }
