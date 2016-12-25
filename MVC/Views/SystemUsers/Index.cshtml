@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<MVC.Models.SystemUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Admins";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Admins <small>Control panel</small></h1>
@@ -48,47 +50,49 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.FullName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Email)
-                                    </td>
-                                    <td>
-                                        @if (item.UpdateDate.HasValue)
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Email)
+                                        </td>
+                                        <td>
+                                            @if (item.UpdateDate.HasValue)
                                             {
-                                            @item.UpdateDate.Value.ToString("MMM dd, yyyy - hh:mm tt")
+                                                @item.UpdateDate.Value.ToString("MMM dd, yyyy - hh:mm tt")
                                             }
                                             else
                                             {
-                                            @Html.Raw(string.Format("N/A"))
+                                                @Html.Raw(string.Format("N/A"))
                                             }
-                                    </td>
-                                    <td>
-                                        @if (item.Status == 1)
+                                        </td>
+                                        <td>
+                                            @if (item.Status == 1)
                                             {
-                                            @Html.Raw(string.Format("Active"))
-                                            }
-                                                else
-                                                {
-                                            @Html.Raw(string.Format("Inactive"))
-                                                    }
-                                    </td>
-                                    <td>
-                                        @if (item.UpdatedBy.HasValue)
-                                            {
-                                            @Html.DisplayFor(modelItem => item.SystemUser1.Email)
+                                                @Html.Raw(string.Format("Active"))
                                             }
                                             else
                                             {
-                                            @Html.Raw(string.Format("N/A"))
+                                                @Html.Raw(string.Format("Inactive"))
                                             }
-                                    </td>
-                                    <td>
-                                        @Html.Raw(string.Format("<label class='label label-primary' onclick='UpdateModel(" + item.Id + ")'>Update</label> <label class='label label-primary' onclick='ShowTasks(" + item.Id + ")'>Tasks</label>"))
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            @if (item.UpdatedBy.HasValue)
+                                            {
+                                                @Html.DisplayFor(modelItem => item.SystemUser1.Email)
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw(string.Format("N/A"))
+                                            }
+                                        </td>
+                                        <td>
+                                            @Html.Raw(string.Format("<label class='label label-primary btn-label' onclick='ViewModel(" + item.Id + ")'>View</label> " +
+                                            "<label class='label label-primary btn-label' onclick='UpdateModel(" + item.Id + ")'>Update</label> " +
+                                            "<label class='label label-primary btn-label' onclick='ShowTasks(" + item.Id + ")'>Tasks</label>"))
+                                        </td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
@@ -109,19 +113,6 @@
             <form class="form-horizontal" id="add-form">
                 <div class="modal-body">
                     <fieldset>
-                        <div class="form-group" style="text-align:center">
-                            <img id="img-add" class="image img-view" src="~/Content/Images/Users/user.png"/>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Image</label>
-                            <div class="col-md-8 inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="btn btn-default btn-file">
-                                        Browse Image <input type="file" name="Image" id="image-add">
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">Full Name</label>
                             <div class="col-md-8 inputGroupContainer">
@@ -145,10 +136,20 @@
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="Password" placeholder="Password" class="form-control" type="text">
+                                    <input name="Password" placeholder="Password" class="form-control" type="password">
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Confirm Password</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="confirmPassword" placeholder="Password" class="form-control" type="password">
+                                </div>
+                            </div>
+                        </div>
+                        <span id="error-span" style="color: indianred; font-size: 120%"></span>
                     </fieldset>
                 </div>
                 <div class="modal-footer">
@@ -170,6 +171,21 @@
         console.log(id);
     }
 
+    function ViewModel(id) {
+        $.ajax({
+            type: "POST",
+            url: "/SystemUsers/Details/"+id,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                console.log(result);
+            },
+            error: function () {
+                alert('Failed');
+            }
+        });
+    }
+
     function show_add() {
         $('#addModal').modal('show');
     }
@@ -182,7 +198,7 @@
             if (validator.isValid()) {
 
                 var data = $('#add-form').serialize();
-                //console.log(data)
+
                 $.ajax({
                     type: "POST",
                     url: "/SystemUsers/Create",
@@ -190,10 +206,10 @@
                     async: false,
                     success: function (result) {
                         if (result == 1) {
-                            window.location.href = '/SystemUsers';
+                            window.location.href = '/SystemUsers?msg=1';
                         }
                         else {
-                            alert('Error');
+                            $('#error-span').html('Error in insert. Make sure e-mail is not duplicate.');
                         }
                     },
                     error: function () {
@@ -223,17 +239,6 @@
                         }
                     }
                 },
-
-                Image: {
-                    validators: {
-                        file: {
-                            extension: 'jpeg,jpg,png',
-                            type: 'image/jpeg,image/png',
-                            message: 'Invalid image type. Please supply jpeg/jpg or png type image.'
-                        }
-                    }
-                },
-
                 Email: {
                     validators: {
                         notEmpty: {
@@ -246,6 +251,10 @@
                 },
                 Password: {
                     validators: {
+                        identical: {
+                            field: 'confirmPassword',
+                            message: 'Confirm your password below - type same password please'
+                        },
                         stringLength: {
                             min: 8,
                         },
@@ -254,18 +263,26 @@
                         }
                     }
                 },
+                confirmPassword: {
+                    validators: {
+                        identical: {
+                            field: 'Password',
+                            message: 'The password and its confirm are not the same'
+                        }
+                    }
+                }
             }
         })
         .on('success.form.bv', function (e) {
-                $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
-                $('#reg_form').data('bootstrapValidator').resetForm();
-                e.preventDefault();
-                var $form = $(e.target);
-                var bv = $form.data('bootstrapValidator');
-                $.post($form.attr('action'), $form.serialize(), function (result) {
-                    console.log(result);
-                }, 'json');
-            });
+            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+            $('#reg_form').data('bootstrapValidator').resetForm();
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                console.log(result);
+            }, 'json');
+        });
     });
 
     function readURL(input) {

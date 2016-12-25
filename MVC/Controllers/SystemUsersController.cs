@@ -13,12 +13,14 @@ namespace MVC.Controllers
     {
         private GarmentsManagementEntities2 db = new GarmentsManagementEntities2();
         
-        public ActionResult Index()
+        public ActionResult Index(string msg="")
         {
+            ViewBag.Message = msg;
             var systemUsers = db.SystemUsers.Include(s => s.SystemUser1);
             return View(systemUsers.ToList());
         }
         
+        [HttpPost]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -26,11 +28,7 @@ namespace MVC.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             SystemUser systemUser = db.SystemUsers.Find(id);
-            if (systemUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(systemUser);
+            return Json(systemUser);
         }
 
         [HttpPost]
@@ -57,7 +55,6 @@ namespace MVC.Controllers
                 }
             }
             catch (Exception e) {
-
                 return Json(e.Message);
             }
         }
@@ -69,7 +66,7 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SystemUser systemUser = db.SystemUsers.Find(id);
+            SystemUser systemUser = db.SystemUsers.Find(id).;
             if (systemUser == null)
             {
                 return HttpNotFound();
