@@ -63,3 +63,7 @@
 .btn-label {
     cursor:pointer;
 }
+
+.top-padding {
+    padding-top: 7px;
+}

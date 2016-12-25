@@ -16,8 +16,20 @@ namespace MVC.Controllers
         public ActionResult Index(string msg="")
         {
             ViewBag.Message = msg;
-            var systemUsers = db.SystemUsers.Include(s => s.SystemUser1);
-            return View(systemUsers.ToList());
+            var systemUsers = db.SystemUsers
+                    .Include(s => s.SystemUser1)
+                    .Select(s => new SystemUserViewModel
+                    {
+                        FullName = s.FullName,
+                        Email = s.Email,
+                        Image = s.Image,
+                        UpdateDate = s.UpdateDate,
+                        UpdatedBy = s.UpdatedBy,
+                        Id = s.Id,
+                        Status = s.Status,
+                        EditedBy = s.SystemUser1.FullName + " ("+s.SystemUser1.Email+")"
+                    }).OrderBy(s => new { s.Status, s.FullName});
+            return View(systemUsers);
         }
         
         [HttpPost]
@@ -25,9 +37,22 @@ namespace MVC.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(0);
             }
-            SystemUser systemUser = db.SystemUsers.Find(id);
+            var systemUser = db.SystemUsers
+                    .Include(s => s.SystemUser1)
+                    .Where(s=> s.Id==id)
+                    .Select(s => new SystemUserViewModel
+                    {
+                        FullName = s.FullName,
+                        Email = s.Email,
+                        Image = s.Image,
+                        UpdateDateString = s.UpdateDate.ToString(),
+                        UpdatedBy = s.UpdatedBy,
+                        Id = s.Id,
+                        Status = s.Status,
+                        EditedBy = s.SystemUser1.FullName + " (" + s.SystemUser1.Email + ")"
+                    }).OrderBy(s => new { s.Status, s.FullName }).Single();
             return Json(systemUser);
         }
 
@@ -66,7 +91,7 @@ namespace MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SystemUser systemUser = db.SystemUsers.Find(id).;
+            SystemUser systemUser = db.SystemUsers.Find(id);
             if (systemUser == null)
             {
                 return HttpNotFound();
