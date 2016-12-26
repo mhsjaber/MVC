@@ -9,6 +9,7 @@ namespace MVC.Models
     public class FabricDetailsViewModel
     {
         public DateTime CreateDate { get; internal set; }
+        public int? CreatedBy { get; internal set; }
         public string Description { get; internal set; }
         [Display(Name ="Updated By")]
         public string EditedBy { get; internal set; }
@@ -18,6 +19,8 @@ namespace MVC.Models
         public string FabricName { get; internal set; }
         public int Id { get; internal set; }
         public int Status { get; internal set; }
+        [Display(Name = "Last Update")]
+        public DateTime? UpdateDate { get; internal set; }
         public int? UpdatedBy { get; internal set; }
     }
 }

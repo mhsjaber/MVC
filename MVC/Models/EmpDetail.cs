@@ -22,6 +22,7 @@ namespace MVC.Models
         public string Address { get; set; }
         public string Image { get; set; }
         public string EmployeeType { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
@@ -30,5 +31,6 @@ namespace MVC.Models
     
         public virtual EmpDesignation EmpDesignation { get; set; }
         public virtual SystemUser SystemUser { get; set; }
+        public virtual SystemUser SystemUser1 { get; set; }
     }
 }

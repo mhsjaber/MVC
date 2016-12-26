@@ -18,14 +18,21 @@ namespace MVC.Models
         public SystemUser()
         {
             this.BuyerDetails = new HashSet<BuyerDetail>();
+            this.BuyerDetails1 = new HashSet<BuyerDetail>();
             this.EmpDesignations = new HashSet<EmpDesignation>();
+            this.EmpDesignations1 = new HashSet<EmpDesignation>();
             this.EmpDetails = new HashSet<EmpDetail>();
+            this.EmpDetails1 = new HashSet<EmpDetail>();
             this.FabricDetails = new HashSet<FabricDetail>();
+            this.FabricDetails1 = new HashSet<FabricDetail>();
             this.FabricStockOperations = new HashSet<FabricStockOperation>();
+            this.FabricStockOperations1 = new HashSet<FabricStockOperation>();
             this.SystemTasks = new HashSet<SystemTask>();
+            this.SystemTasks1 = new HashSet<SystemTask>();
             this.SystemUsers1 = new HashSet<SystemUser>();
             this.SystemUserTasks = new HashSet<SystemUserTask>();
             this.SystemUserTasks1 = new HashSet<SystemUserTask>();
+            this.SystemUserTasks2 = new HashSet<SystemUserTask>();
         }
     
         public int Id { get; set; }
@@ -40,15 +47,27 @@ namespace MVC.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BuyerDetail> BuyerDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BuyerDetail> BuyerDetails1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmpDesignation> EmpDesignations { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmpDesignation> EmpDesignations1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmpDetail> EmpDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<EmpDetail> EmpDetails1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FabricDetail> FabricDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FabricDetail> FabricDetails1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FabricStockOperation> FabricStockOperations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FabricStockOperation> FabricStockOperations1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SystemTask> SystemTasks { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SystemTask> SystemTasks1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SystemUser> SystemUsers1 { get; set; }
         public virtual SystemUser SystemUser1 { get; set; }
@@ -56,5 +75,7 @@ namespace MVC.Models
         public virtual ICollection<SystemUserTask> SystemUserTasks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SystemUserTask> SystemUserTasks1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SystemUserTask> SystemUserTasks2 { get; set; }
     }
 }

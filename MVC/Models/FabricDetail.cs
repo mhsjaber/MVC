@@ -24,12 +24,14 @@ namespace MVC.Models
         public string FabricName { get; set; }
         public string FabricCode { get; set; }
         public string Description { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int Status { get; set; }
     
         public virtual SystemUser SystemUser { get; set; }
+        public virtual SystemUser SystemUser1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FabricStockOperation> FabricStockOperations { get; set; }
     }

@@ -8,47 +8,46 @@ using System.Web;
 using System.Web.Mvc;
 using MVC.Models;
 using System.Text.RegularExpressions;
-using System.Globalization;
 
 namespace MVC.Controllers
 {
-    public class FabricDetailsController : Controller
+    public class DesignationsController : Controller
     {
         private GarmentsManagementEntities db = new GarmentsManagementEntities();
         
         public ActionResult Index()
         {
-            var fabricDetails = db.FabricDetails
-                .Include(f => f.SystemUser)
-                .Select(s => new FabricDetailsViewModel
+            var empDesignations = db
+                .EmpDesignations
+                .Include(e => e.SystemUser)
+                .Select(s => new DesignationsViewModel
                 {
-                    FabricCode = s.FabricCode,
-                    FabricName = s.FabricName,
-                    Description = s.Description,
-                    UpdatedBy = s.UpdatedBy,
+                    Name = s.Name,
+                    CreatedBy = s.SystemUser.Email,
+                    UpdateDate = s.UpdateDate,
                     Id = s.Id,
-                    Status = s.Status,
-                    UpdateDate = s.UpdateDate
+                    Status = s.Status
                 });
-            return View(fabricDetails.ToList());
+            return View(empDesignations.ToList());
         }
 
+
         [HttpPost]
-        public ActionResult Create([Bind(Include = "FabricName,FabricCode,Description,CreateDate,UpdateDate,UpdatedBy,Status")] FabricDetail fabricDetail)
+        public ActionResult Create([Bind(Include = "Name,CreatedBy,CreateDate,UpdateDate,UpdatedBy,Status")] EmpDesignation empDesignation)
         {
             try
             {
                 Regex rgx = new Regex("[^a-zA-Z0-9 - .]");
-                fabricDetail.FabricName = rgx.Replace(fabricDetail.FabricName, "").Trim();
-                fabricDetail.FabricCode = fabricDetail.FabricCode.Trim();
-                fabricDetail.UpdateDate = DateTime.Now;
-                fabricDetail.CreateDate = DateTime.Now;
-                fabricDetail.CreatedBy = 234;
-                fabricDetail.Status = 1;
+                empDesignation.Name = rgx.Replace(empDesignation.Name, "").Trim();
+                empDesignation.UpdateDate = DateTime.Now;
+                empDesignation.CreateDate = DateTime.Now;
+                empDesignation.CreatedBy = 234;
+                empDesignation.UpdatedBy = 234;
+                empDesignation.Status = 1;
 
                 if (ModelState.IsValid)
                 {
-                    db.FabricDetails.Add(fabricDetail);
+                    db.EmpDesignations.Add(empDesignation);
                     db.SaveChanges();
                     return Json(1);
                 }
@@ -70,34 +69,31 @@ namespace MVC.Controllers
             {
                 return Json(0);
             }
-            var systemUser = db.FabricDetails
+            var systemUser = db.EmpDesignations
                     .Include(s => s.SystemUser)
                     .Where(s => s.Id == id)
-                    .Select(s => new FabricDetailsViewModel
+                    .Select(s => new DesignationsViewModel
                     {
-                        FabricCode = s.FabricCode,
-                        FabricName = s.FabricName,
-                        Description = s.Description,
+                        Name = s.Name,
                         Status = s.Status
-                    }).OrderBy(s => new { s.Status, s.FabricName }).Single();
+                    }).Single();
             return Json(systemUser);
         }
 
 
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "Id,FabricName,FabricCode,Description,UpdateDate,UpdatedBy,Status")] FabricDetail fabricDetail)
+        public ActionResult Edit([Bind(Include = "Id,Name,UpdateDate,UpdatedBy,Status")] EmpDesignation empDesignation)
         {
             try
             {
                 Regex rgx = new Regex("[^a-zA-Z0-9 - .]");
-                fabricDetail.FabricName = rgx.Replace(fabricDetail.FabricName, "").Trim();
-                fabricDetail.FabricCode = fabricDetail.FabricCode.Trim();
-                fabricDetail.UpdateDate = DateTime.Now;
-                fabricDetail.UpdatedBy = 234;
+                empDesignation.Name = rgx.Replace(empDesignation.Name, "").Trim();
+                empDesignation.UpdateDate = DateTime.Now;
+                empDesignation.UpdatedBy = 234;
 
-                var person = db.FabricDetails
+                var des = db.EmpDesignations
                     .Include(s => s.SystemUser)
-                    .Where(s => s.Id == fabricDetail.Id)
+                    .Where(s => s.Id == empDesignation.Id)
                     .Select(s => new FabricDetailsViewModel
                     {
                         CreateDate = s.CreateDate,
@@ -105,12 +101,12 @@ namespace MVC.Controllers
                     })
                     .Single();
 
-                fabricDetail.CreateDate = person.CreateDate;
-                fabricDetail.CreatedBy = person.CreatedBy;
+                empDesignation.CreateDate = des.CreateDate;
+                empDesignation.CreatedBy = des.CreatedBy;
 
                 if (ModelState.IsValid)
                 {
-                    db.Entry(fabricDetail).State = EntityState.Modified;
+                    db.Entry(empDesignation).State = EntityState.Modified;
                     db.SaveChanges();
                     return Json(1);
                 }
@@ -121,7 +117,6 @@ namespace MVC.Controllers
                 return Json(ex.Message);
             }
         }
-
 
         protected override void Dispose(bool disposing)
         {

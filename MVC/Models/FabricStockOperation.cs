@@ -20,6 +20,7 @@ namespace MVC.Models
         public string Purpose { get; set; }
         public System.DateTime OperationDate { get; set; }
         public string OperationType { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
@@ -27,5 +28,6 @@ namespace MVC.Models
     
         public virtual FabricDetail FabricDetail { get; set; }
         public virtual SystemUser SystemUser { get; set; }
+        public virtual SystemUser SystemUser1 { get; set; }
     }
 }

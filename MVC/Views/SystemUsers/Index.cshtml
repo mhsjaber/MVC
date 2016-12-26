@@ -367,8 +367,9 @@
 
 
     $(document).ready(function () {
-        $("#add-button").click(function () {
+        $("#add-button:not('.clickadded')").click(function () {
 
+            $("#add-button").addClass("clickadded");
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();
             if (validator.isValid()) {
@@ -385,10 +386,12 @@
                             window.location.href = '/SystemUsers';
                         }
                         else {
+                            $("#add-button").removeClass("clickadded");
                             $('#error-span').html('Error in insert. This e-mail maybe used before.');
                         }
                     },
                     error: function () {
+                        $("#add-button").removeClass("clickadded");
                         alert('Failed');
                     }
                 });
@@ -462,7 +465,8 @@
 
 
 
-        $("#update-button").click(function () {
+        $("#update-button:not('.clickadded')").click(function () {
+            $("#update-button").addClass("clickadded");
             var validator = $('#update-form').data('bootstrapValidator');
             validator.validate();
             if (validator.isValid()) {
@@ -478,10 +482,12 @@
                             window.location.href = '/SystemUsers';
                         }
                         else {
+                            $("#update-button").removeClass("clickadded");
                             $('#error-span2').html('Error in update. This e-mail maybe used before.');
                         }
                     },
                     error: function () {
+                        $("#update-button").removeClass("clickadded");
                         alert('Failed');
                     }
                 });

@@ -23,11 +23,13 @@ namespace MVC.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public Nullable<int> UpdatedBy { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public int UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int Status { get; set; }
     
         public virtual SystemUser SystemUser { get; set; }
+        public virtual SystemUser SystemUser1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EmpDetail> EmpDetails { get; set; }
     }

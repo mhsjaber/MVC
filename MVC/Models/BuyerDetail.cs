@@ -23,11 +23,13 @@ namespace MVC.Models
         public string ContactPersonMobile { get; set; }
         public string ContactPersonDetails { get; set; }
         public string Mobile { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int Status { get; set; }
     
         public virtual SystemUser SystemUser { get; set; }
+        public virtual SystemUser SystemUser1 { get; set; }
     }
 }

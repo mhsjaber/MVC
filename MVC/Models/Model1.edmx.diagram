@@ -4,27 +4,34 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="dc84f877143a46c998948cdc6799ef77" Name="Diagram1">
-        <EntityTypeShape EntityType="GarmentsManagementModel.BuyerDetail" Width="1.5" PointX="3" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDesignation" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDetail" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.FabricDetail" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.FabricStockOperation" Width="1.5" PointX="8.25" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemTask" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUser" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUserTask" Width="1.5" PointX="5.25" PointY="12.75" IsExpanded="true" />
+      <Diagram DiagramId="de994a183575442da4852ecda45a269d" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="GarmentsManagementModel.BuyerDetail" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDesignation" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDetail" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.FabricDetail" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.FabricStockOperation" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemTask" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUser" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUserTask" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
         <AssociationConnector Association="GarmentsManagementModel.FK_BuyerDetails_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_BuyerDetails_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_EmpDesignations_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_EmpDesignations_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_EmpDetails_EmpDesignations" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_EmpDetails_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_EmpDetails_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_FabricDetails_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_FabricDetails_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_FabricStockOperation_FabricDetails" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_FabricStockOperation_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_FabricStockOperation_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_SystemTasks_SystemUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_SystemTasks_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_SystemUserTasks_SystemTasks" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_SystemUsers_SystemUsers" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_SystemUserTasks_SystemUsers" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_SystemUserTasks_SystemUsers1" ManuallyRouted="false" />
+        <AssociationConnector Association="GarmentsManagementModel.FK_SystemUserTasks_SystemUsers2" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
