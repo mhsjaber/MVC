@@ -1,13 +1,12 @@
-﻿@model IEnumerable<MVC.Models.SystemUserViewModel>
+﻿@model IEnumerable<MVC.Models.EmployeesViewModel>
 
 @{
-    ViewBag.Title = "Admins";
+    ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="content-wrapper">
     <section class="content-header">
-        <h1>Admins <small>Control panel</small></h1>
+        <h1>Employees <small>Control panel</small></h1>
         <div class="add-button">
             <button class="btn btn-primary" onclick="show_add()"><i class="fa fa-plus" aria-hidden="true"></i> Add More</button>
         </div>
@@ -19,27 +18,27 @@
                 <!-- general form elements -->
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">System Users</h3>
+                        <h3 class="box-title">Employees List</h3>
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <table class="table table-striped table-bordered" id="user-table">
+                        <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.FullName)
+                                        Full Name
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Mobile)
                                     </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.Email)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.UpdateDate)
+                                        @Html.DisplayNameFor(model => model.Designation)
                                     </th>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.Status)
-                                    </th>
-                                    <th>
-                                        Updated By
+                                        @Html.DisplayNameFor(model => model.EmployeeType)
                                     </th>
                                     <th>
                                         Action
@@ -51,45 +50,24 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.FullName)
+                                            @Html.DisplayFor(modelItem => item.FirstName)
+                                            @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Mobile)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.Email)
                                         </td>
                                         <td>
-                                            @if (item.UpdateDate.HasValue)
-                                            {
-                                                @item.UpdateDate.Value.ToString("MMM dd, yyyy - hh:mm tt")
-                                            }
-                                            else
-                                            {
-                                                @Html.Raw(string.Format("N/A"))
-                                            }
+                                            @Html.DisplayFor(modelItem => item.Designation)
                                         </td>
                                         <td>
-                                            @if (item.Status == 1)
-                                            {
-                                                @Html.Raw(string.Format("Active"))
-                                            }
-                                            else
-                                            {
-                                                @Html.Raw(string.Format("Inactive"))
-                                            }
-                                        </td>
-                                        <td>
-                                            @if (item.UpdatedBy.HasValue)
-                                            {
-                                                @Html.DisplayFor(modelItem => item.EditedBy)
-                                            }
-                                            else
-                                            {
-                                                @Html.Raw(string.Format("N/A"))
-                                            }
+                                            @Html.DisplayFor(modelItem => item.EmployeeType)
                                         </td>
                                         <td>
                                             @Html.Raw(string.Format("<label class='label label-primary btn-label' onclick='ViewModel(" + item.Id + ")'>View</label> " +
-                                            "<label class='label label-primary btn-label' onclick='UpdateModel(" + item.Id + ")'>Update</label> " +
-                                            "<label class='label label-primary btn-label' onclick='ShowTasks(" + item.Id + ")'>Tasks</label>"))
+                                            "<label class='label label-primary btn-label' onclick='UpdateModel(" + item.Id + ")'>Update</label>"))
                                         </td>
                                     </tr>
                                 }
@@ -108,44 +86,79 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Add User</h4>
+                <h4 class="modal-title">Add Employee</h4>
             </div>
             <form class="form-horizontal" id="add-form">
                 <div class="modal-body">
                     <fieldset>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Full Name</label>
+                            <label class="col-md-3 control-label">First Name</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="FullName" placeholder="Full Name" class="form-control" type="text">
+                                    <input name="FirstName" placeholder="First Name" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">E-mail</label>
+                            <label class="col-md-3 control-label">Last Name</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="Email" placeholder="E-mail" class="form-control" type="email">
+                                    <input name="LastName" placeholder="Last Name" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Password</label>
-                            <div class="col-md-8 inputGroupContainer">
+                            <label class="col-md-3 control-label">Designation</label>
+                            <div class="col-md-5 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="Password" placeholder="Password" class="form-control" type="password">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-briefcase"></i></span>
+                                    <select name="DesignationId" class="form-control">
+                                        @foreach (MVC.Models.DesignationsViewModel item in (IEnumerable<MVC.Models.DesignationsViewModel>)ViewData["Designations"])
+                                        {
+                                            <option value="@item.Id">@item.Name</option>   
+                                        }
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Confirm Password</label>
+                            <label class="col-md-3 control-label">Type</label>
+                            <div class="col-md-5 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                    <select name="EmployeeType" class="form-control">
+                                        <option>Regular</option>
+                                        <option>Daily Basis</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Mobile</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="confirmPassword" placeholder="Password" class="form-control" type="password">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+                                    <input name="Mobile" placeholder="Mobile" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Email</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                    <input name="Email" placeholder="Email" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Address</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                                    <textarea name="Address" placeholder="Address" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -163,13 +176,14 @@
 </div>
 @*Add modal ends*@
 
+
 @*Update modal starts*@
 <div id="updateModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Update User</h4>
+                <h4 class="modal-title">Update Employee</h4>
             </div>
             <form class="form-horizontal" id="update-form">
                 <div class="modal-body">
@@ -178,26 +192,35 @@
                             <label class="col-md-3 control-label">ID</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
                                     <input name="Id" id="updateId" placeholder="Id" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">Full Name</label>
+                            <label class="col-md-3 control-label">Name</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="FullName" id="updateFullName" placeholder="Full Name" class="form-control" type="text">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricName" id="updateFabricName" placeholder="Fabric Name" class="form-control" type="text">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">E-mail</label>
+                            <label class="col-md-3 control-label">Code</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input name="Email" id="updateEmail" placeholder="E-mail" class="form-control" type="email">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricCode" id="updateFabricCode" placeholder="Fabric Code" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <textarea name="Description" id="updateDescription" placeholder="Description" class="form-control" rows="4" cols="50"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +228,7 @@
                             <label class="col-md-3 control-label">Status</label>
                             <div class="col-md-4 inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
                                     <select name="Status" id="updateStatus" class="form-control">
                                         <option value="1">Active</option>
                                         <option value="0">Inactive</option>
@@ -227,82 +250,24 @@
 </div>
 @*Update modal ends*@
 
-
-@*View modal starts*@
-<div id="detailsModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">View Details</h4>
-            </div>
-            <div class="modal-body form-horizontal">
-                <div class="form-group" style="text-align:center">
-                    <img src="~/Content/Images/Users/user.png" style="width: 100px; height: 100px; border-radius: 50px" id="detailsImage"/>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Full Name</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsFullName"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">E-mail</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsEmail"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Last Update</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsLastUpdate"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Updated By</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsUpdatedBy"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Status</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsStatus"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" id="add-button" onclick="gotoUpdate()">Edit</button>
-            </div>
-        </div>
-    </div>
-</div>
-@*View modal ends*@
-
 <script>
-    var detId;
-
+    var click = true;
     $(document).ready(function () {
-        var table = $('#user-table').dataTable({
-            "order": []
-        });
+        var table = $('.table').dataTable();
     });
-    function gotoUpdate() {
-        UpdateModel(detId);
-    }
-
 
     function UpdateModel(id) {
+        click = true;
         $.ajax({
             type: "POST",
-            url: "/SystemUsers/EditValue/" + id,
+            url: "/FabricDetails/EditValue/" + id,
             dataType: 'json',
             async: false,
             success: function (result) {
                 $('#updateId').val(id);
-                $('#updateFullName').val(result.FullName);
-                $('#updateEmail').val(result.Email);
+                $('#updateFabricCode').val(result.FabricCode);
+                $('#updateFabricName').val(result.FabricName);
+                $('#updateDescription').val(result.Description);
                 $('#updateStatus').val(result.Status);
                 $('#updateModal').modal('show');
             },
@@ -312,85 +277,37 @@
         });
     }
 
-    function ViewModel(id) {
-        detId = id;
-        $.ajax({
-            type: "POST",
-            url: "/SystemUsers/Details/" + id,
-            dataType: 'json',
-            async: false,
-            success: function (result) {
-                $('#detailsModal').modal('show');
-                $('#detailsFullName').html(result.FullName);
-                $('#detailsEmail').html(result.Email);
-                $('#detailsLastUpdate').html(result.UpdateDateString);
-                if (result.UpdatedBy != null) {
-                    $('#detailsUpdatedBy').html(result.EditedBy);
-                }
-                else {
-                    $('#detailsUpdatedBy').html('N/A');
-                }
-
-                if (result.Status != '1') {
-                    $('#detailsStatus').html('Inactive');
-                }
-                else {
-                    $('#detailsStatus').html('Active');
-                }
-
-                if (result.Image != null) {
-                    $.ajax({
-                        url: '/Content/Images/Users/' + result.Image,
-                        type: "head",
-                        success: function () {
-                            $('#detailsImage').attr('src', '/Content/Images/Users/' + result.Image);
-                        },
-                        error: function () {
-                            console.log('Not available');
-                        }
-                    });
-                }
-
-            },
-            error: function () {
-                alert('Failed');
-            }
-        });
-    }
-
     function show_add() {
+        click = true;
         $('#addModal').modal('show');
     }
 
-
-
-
     $(document).ready(function () {
         $("#add-button:not('.clickadded')").click(function () {
-
-            $("#add-button").addClass("clickadded");
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
 
+            if (validator.isValid() && click) {
+                click = false;
                 var data = $('#add-form').serialize();
 
                 $.ajax({
                     type: "POST",
-                    url: "/SystemUsers/Create",
+                    url: "/Employees/Create",
                     data: data,
                     async: false,
                     success: function (result) {
+                        console.log(result);
                         if (result == 1) {
-                            window.location.href = '/SystemUsers';
+                            window.location.href = '/Employees';
                         }
                         else {
-                            $("#add-button").removeClass("clickadded");
-                            $('#error-span').html('Error in insert. This e-mail maybe used before.');
+                            click = true;
+                            $('#error-span').html('Error in insert.');
                         }
                     },
                     error: function () {
-                        $("#add-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });
@@ -407,45 +324,63 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                FullName: {
+                FirstName: {
                     validators: {
                         stringLength: {
-                            min: 5,
+                            min: 2,
                         },
                         notEmpty: {
-                            message: 'Please supply your full name'
+                            message: 'Please supply first name'
+                        }
+                    }
+                },
+                LastName: {
+                    validators: {
+                        stringLength: {
+                            min: 2,
+                        },
+                        notEmpty: {
+                            message: 'Please supply last name'
+                        }
+                    }
+                },
+                Mobile: {
+                    validators: {
+                        stringLength: {
+                            min: 8,
+                        },
+                        notEmpty: {
+                            message: 'Please supply mobile number'
                         }
                     }
                 },
                 Email: {
                     validators: {
-                        notEmpty: {
-                            message: 'Please supply your email address'
-                        },
                         emailAddress: {
-                            message: 'Please supply a valid email address'
+                            message: 'Please supply valid email address'
                         }
                     }
                 },
-                Password: {
+                Address: {
                     validators: {
-                        identical: {
-                            field: 'confirmPassword',
-                            message: 'Confirm your password below - type same password please'
-                        },
                         stringLength: {
-                            min: 8,
-                        },
-                        notEmpty: {
-                            message: 'Please supply your password'
+                            min: 0,
+                            max: 100,
+                            message: 'Please supply mobile number'
                         }
                     }
                 },
-                confirmPassword: {
+                DesignationId: {
                     validators: {
-                        identical: {
-                            field: 'Password',
-                            message: 'The password and its confirm are not the same'
+                        notEmpty: {
+                            message: 'Please select designation'
+                        }
+                    }
+                },
+                EmployeeType: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please select employee type'
                         }
                     }
                 }
@@ -465,24 +400,24 @@
 
 
         $("#update-button:not('.clickadded')").click(function () {
-            $("#update-button").addClass("clickadded");
             var validator = $('#update-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
+            if (validator.isValid() && click) {
                 var data = $('#update-form').serialize();
 
                 $.ajax({
                     type: "POST",
-                    url: "/SystemUsers/Edit",
+                    url: "/FabricDetails/Edit",
                     data: data,
                     async: false,
                     success: function (result) {
+                        console.log(result)
                         if (result == 1) {
-                            window.location.href = '/SystemUsers';
+                            window.location.href = '/FabricDetails';
                         }
                         else {
                             $("#update-button").removeClass("clickadded");
-                            $('#error-span2').html('Error in update. This e-mail maybe used before.');
+                            $('#error-span2').html('Error in update. This CODE maybe used before.');
                         }
                     },
                     error: function () {
@@ -502,23 +437,23 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                FullName: {
+                FabricName: {
                     validators: {
                         stringLength: {
                             min: 5,
                         },
                         notEmpty: {
-                            message: 'Please supply your full name'
+                            message: 'Please supply fabric name'
                         }
                     }
                 },
-                Email: {
+                FabricCode: {
                     validators: {
-                        notEmpty: {
-                            message: 'Please supply your email address'
+                        stringLength: {
+                            min: 5,
                         },
-                        emailAddress: {
-                            message: 'Please supply a valid email address'
+                        notEmpty: {
+                            message: 'Please supply fabric code'
                         }
                     }
                 }
@@ -535,20 +470,5 @@
             }, 'json');
         });
     });
-
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                $('#img-add').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    $("#image-add").change(function () {
-        readURL(this);
-    });
-
 
 </script>
