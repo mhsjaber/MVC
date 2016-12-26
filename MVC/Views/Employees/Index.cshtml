@@ -136,6 +136,25 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-3 control-label">Bloog Group</label>
+                            <div class="col-md-5 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-tint"></i></span>
+                                    <select name="EmployeeType" class="form-control">
+                                        <option value="">Select</option>
+                                        <option>A+</option>
+                                        <option>A-</option>
+                                        <option>B+</option>
+                                        <option>B-</option>
+                                        <option>AB+</option>
+                                        <option>AB-</option>
+                                        <option>O+</option>
+                                        <option>O-</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-md-3 control-label">Mobile</label>
                             <div class="col-md-8 inputGroupContainer">
                                 <div class="input-group">
@@ -159,6 +178,15 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                     <textarea name="Address" placeholder="Address" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Join Date</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input name="JoinDate" placeholder="Join Date" class="form-control datepicker">
                                 </div>
                             </div>
                         </div>
@@ -250,8 +278,70 @@
 </div>
 @*Update modal ends*@
 
+
+@*View modal starts*@
+<div id="detailsModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">View Details</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <div class="form-group" style="text-align:center">
+                    <img src="~/Content/Images/Users/user.png" style="width: 100px; height: 100px; border-radius: 50px" id="detailsImage" />
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Full Name</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsFullName"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Mobile</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsMobile"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">E-mail</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsEmail"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Address</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsAddress"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Designation</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsDesignation"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Type</label>
+                    <div class="col-md-7 top-padding">
+                        <span id="detailsType"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="add-button" onclick="gotoUpdate()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+@*View modal ends*@
+
+
 <script>
     var click = true;
+    var detId;
+
     $(document).ready(function () {
         var table = $('.table').dataTable();
     });
@@ -277,12 +367,52 @@
         });
     }
 
+
+    function ViewModel(id) {
+        detId = id;
+        $.ajax({
+            type: "POST",
+            url: "/Employees/Details/" + id,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                $('#detailsModal').modal('show');
+                $('#detailsFullName').html(result.FirstName + ' ' +result.LastName);
+                $('#detailsEmail').html(result.Email);
+                $('#detailsMobile').html(result.Mobile);
+                $('#detailsAddress').html(result.Address);
+                $('#detailsEmployeeType').html(result.EmployeeType);
+                $('#detailsDesignation').html(result.Designation);
+                $('#detailsType').html(result.EmployeeType);
+                
+                if (result.Image != null) {
+                    $.ajax({
+                        url: '/Content/Images/Employees/' + result.Image,
+                        type: "head",
+                        success: function () {
+                            $('#detailsImage').attr('src', '/Content/Images/Employees/' + result.Image);
+                        },
+                        error: function () {
+                            console.log('Not available');
+                        }
+                    });
+                }
+
+            },
+            error: function () {
+                alert('Failed');
+            }
+        });
+    }
+
     function show_add() {
         click = true;
         $('#addModal').modal('show');
     }
 
     $(document).ready(function () {
+        $('.datepicker').datepicker();
+
         $("#add-button:not('.clickadded')").click(function () {
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();

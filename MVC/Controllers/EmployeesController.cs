@@ -76,6 +76,32 @@ namespace MVC.Controllers
             }
         }
 
+        [HttpPost]
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return Json(0);
+            }
+            var empDetails = db.EmpDetails
+                    .Include(s => s.SystemUser1)
+                    .Where(s => s.Id == id)
+                    .Select(e => new EmployeesViewModel
+                    {
+                        Id = e.Id,
+                        FirstName = e.FirstName,
+                        LastName = e.LastName,
+                        Mobile = e.Mobile,
+                        Email = e.Email,
+                        Address = e.Address,
+                        Image = e.Image,
+                        EmployeeType = e.EmployeeType,
+                        Designation = e.EmpDesignation.Name
+                    })
+                    .Single();
+            return Json(empDetails);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
