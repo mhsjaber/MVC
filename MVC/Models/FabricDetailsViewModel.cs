@@ -8,8 +8,9 @@ namespace MVC.Models
 {
     public class FabricDetailsViewModel
     {
+        public DateTime CreateDate { get; internal set; }
         public string Description { get; internal set; }
-        [Display(Name ="Edited By")]
+        [Display(Name ="Updated By")]
         public string EditedBy { get; internal set; }
         [Display(Name = "Code")]
         public string FabricCode { get; internal set; }

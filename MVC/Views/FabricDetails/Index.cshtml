@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="content-wrapper">
     <section class="content-header">
         <h1>Fabrics <small>Control panel</small></h1>
@@ -62,12 +61,20 @@
                                             @Html.DisplayFor(modelItem => item.Description)
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.Status)
+                                            @if (item.Status == 1)
+                                            {
+                                                @Html.Raw(string.Format("Active"))
+                                            }
+                                            else
+                                            {
+                                                @Html.Raw(string.Format("Inactive"))
+                                            }
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.EditedBy)
                                         </td>
                                         <td>
+                                            @Html.Raw(string.Format("<label class='label label-primary btn-label' onclick='UpdateModel(" + item.Id + ")'>Update</label> "))
                                         </td>
                                     </tr>
                                 }
@@ -80,10 +87,303 @@
     </section>
 </div>
 
+@*Add modal starts*@
+<div id="addModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add Fabric</h4>
+            </div>
+            <form class="form-horizontal" id="add-form">
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Name</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricName" placeholder="Fabric Name" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Code</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricCode" placeholder="Fabric Code" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <textarea name="Description" placeholder="Description" class="form-control" rows="4" cols="50"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="error-span" style="color: indianred; font-size: 120%"></span>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add-button">Save</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+@*Add modal ends*@
+
+
+@*Update modal starts*@
+<div id="updateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Fabric</h4>
+            </div>
+            <form class="form-horizontal" id="update-form">
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-group hide">
+                            <label class="col-md-3 control-label">ID</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="Id" id="updateId" placeholder="Id" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Name</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricName" id="updateFabricName" placeholder="Fabric Name" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Code</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <input name="FabricCode" id="updateFabricCode" placeholder="Fabric Code" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Description</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <textarea name="Description" id="updateDescription" placeholder="Description" class="form-control" rows="4" cols="50"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Status</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-eye-open"></i></span>
+                                    <select name="Status" id="updateStatus" class="form-control">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="error-span2" style="color: indianred; font-size: 120%"></span>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update-button">Update</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+@*Update modal ends*@
+
 <script>
     $(document).ready(function () {
-        var table = $('.table').dataTable({
-            "order": []
+        var table = $('.table').dataTable();
+    });
+
+    function UpdateModel(id) {
+        $.ajax({
+            type: "POST",
+            url: "/FabricDetails/EditValue/" + id,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                $('#updateId').val(id);
+                $('#updateFabricCode').val(result.FabricCode);
+                $('#updateFabricName').val(result.FabricName);
+                $('#updateDescription').val(result.Description);
+                $('#updateStatus').val(result.Status);
+                $('#updateModal').modal('show');
+            },
+            error: function () {
+                alert('Failed');
+            }
+        });
+    }
+
+    function show_add() {
+        $('#addModal').modal('show');
+    }
+
+    $(document).ready(function () {
+        $("#add-button").click(function () {
+
+            var validator = $('#add-form').data('bootstrapValidator');
+            validator.validate();
+            if (validator.isValid()) {
+
+                var data = $('#add-form').serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/FabricDetails/Create",
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        if (result == 1) {
+                            window.location.href = '/FabricDetails';
+                        }
+                        else {
+                            $('#error-span').html('Error in insert. This product CODE maybe used before.');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+
+        var validate = $('#add-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                FabricName: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                        },
+                        notEmpty: {
+                            message: 'Please supply fabric name'
+                        }
+                    }
+                },
+                FabricCode: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                        },
+                        notEmpty: {
+                            message: 'Please supply fabric code'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+            $('#reg_form').data('bootstrapValidator').resetForm();
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                console.log(result);
+            }, 'json');
+        });
+
+
+
+        $("#update-button").click(function () {
+            var validator = $('#update-form').data('bootstrapValidator');
+            validator.validate();
+            if (validator.isValid()) {
+                var data = $('#update-form').serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/FabricDetails/Edit",
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        console.log(result)
+                        if (result == 1) {
+                            window.location.href = '/FabricDetails';
+                        }
+                        else {
+                            $('#error-span2').html('Error in update. This e-mail maybe used before.');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+        var validate = $('#update-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                FabricName: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                        },
+                        notEmpty: {
+                            message: 'Please supply fabric name'
+                        }
+                    }
+                },
+                FabricCode: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                        },
+                        notEmpty: {
+                            message: 'Please supply fabric code'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+            $('#reg_form').data('bootstrapValidator').resetForm();
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                console.log(result);
+            }, 'json');
         });
     });
+
 </script>

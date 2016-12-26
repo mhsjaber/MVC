@@ -11,7 +11,7 @@ namespace MVC.Controllers
 {
     public class SystemUsersController : Controller
     {
-        private GarmentsManagementEntities2 db = new GarmentsManagementEntities2();
+        private GarmentsManagementEntities db = new GarmentsManagementEntities();
         
         public ActionResult Index()
         {
