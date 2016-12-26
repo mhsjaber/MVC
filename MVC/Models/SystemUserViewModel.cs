@@ -15,6 +15,7 @@ namespace MVC.Models
         public string FullName { get;  set; }
         public int Id { get; internal set; }
         public string Image { get; internal set; }
+        public string Password { get; internal set; }
         public int Status { get; internal set; }
         [Display(Name = "Last Update")]
         public DateTime? UpdateDate { get; internal set; }

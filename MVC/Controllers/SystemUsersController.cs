@@ -62,8 +62,8 @@ namespace MVC.Controllers
             try
             {
                 Regex rgx = new Regex("[^a-zA-Z0-9 - .]");
-                systemUser.FullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(rgx.Replace(systemUser.FullName, "").ToLower());
-                systemUser.Email = systemUser.Email.ToLower();
+                systemUser.FullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(rgx.Replace(systemUser.FullName, "").ToLower()).Trim();
+                systemUser.Email = systemUser.Email.ToLower().Trim();
                 systemUser.UpdateDate = DateTime.Now;
                 systemUser.UpdatedBy = null;
                 systemUser.Status = 1;
@@ -84,65 +84,61 @@ namespace MVC.Controllers
             }
         }
 
-        // GET: SystemUsers/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SystemUser systemUser = db.SystemUsers.Find(id);
-            if (systemUser == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.UpdatedBy = new SelectList(db.SystemUsers, "Id", "UserName", systemUser.UpdatedBy);
-            return View(systemUser);
-        }
 
-        // POST: SystemUsers/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserName,Password,FullName,UpdateDate,UpdatedBy,Status")] SystemUser systemUser)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(systemUser).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.UpdatedBy = new SelectList(db.SystemUsers, "Id", "UserName", systemUser.UpdatedBy);
-            return View(systemUser);
-        }
-
-        // GET: SystemUsers/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult EditValue(int? id)
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return Json(0);
             }
-            SystemUser systemUser = db.SystemUsers.Find(id);
-            if (systemUser == null)
-            {
-                return HttpNotFound();
-            }
-            return View(systemUser);
+            var systemUser = db.SystemUsers
+                    .Include(s => s.SystemUser1)
+                    .Where(s => s.Id == id)
+                    .Select(s => new SystemUserViewModel
+                    {
+                        FullName = s.FullName,
+                        Email = s.Email,
+                        Status = s.Status
+                    }).OrderBy(s => new { s.Status, s.FullName }).Single();
+            return Json(systemUser);
         }
 
-        // POST: SystemUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Edit([Bind(Include = "Id,Email,FullName,UpdateDate,UpdatedBy,Status")] SystemUser systemUser)
         {
-            SystemUser systemUser = db.SystemUsers.Find(id);
-            db.SystemUsers.Remove(systemUser);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+            try
+            {
+                Regex rgx = new Regex("[^a-zA-Z0-9 - .]");
+                systemUser.FullName = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(rgx.Replace(systemUser.FullName, "").ToLower()).Trim();
+                systemUser.Email = systemUser.Email.ToLower().Trim();
+                systemUser.UpdateDate = DateTime.Now;
 
+                var person = db.SystemUsers
+                    .Include(s => s.SystemUser1)
+                    .Where(s => s.Id == systemUser.Id)
+                    .Select(s => new SystemUserViewModel
+                    {
+                        Password = s.Password
+                    }).Single();
+
+                systemUser.Password = person.Password;
+                systemUser.UpdatedBy = null;
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(systemUser).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return Json(1);
+                }
+                return Json(2);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -103,6 +103,7 @@
     </section>
 </div>
 
+@*Add modal starts*@
 <div id="addModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -161,13 +162,81 @@
 
     </div>
 </div>
+@*Add modal ends*@
 
+@*Update modal starts*@
+<div id="updateModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update User</h4>
+            </div>
+            <form class="form-horizontal" id="update-form">
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="form-group hide">
+                            <label class="col-md-3 control-label">ID</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="Id" id="updateId" placeholder="Id" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Full Name</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="FullName" id="updateFullName" placeholder="Full Name" class="form-control" type="text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">E-mail</label>
+                            <div class="col-md-8 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <input name="Email" id="updateEmail" placeholder="E-mail" class="form-control" type="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Status</label>
+                            <div class="col-md-4 inputGroupContainer">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <select name="Status" id="updateStaus" class="form-control">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                        <option value="10">Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <span id="error-span2" style="color: indianred; font-size: 120%"></span>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="update-button">Update</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+@*Update modal ends*@
+
+
+@*View modal starts*@
 <div id="detailsModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">User Details</h4>
+                <h4 class="modal-title">View Details</h4>
             </div>
             <div class="modal-body form-horizontal">
                 <div class="form-group" style="text-align:center">
@@ -206,24 +275,47 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="add-button">Edit</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" id="add-button" onclick="gotoUpdate()">Edit</button>
             </div>
         </div>
     </div>
 </div>
+@*View modal ends*@
 
 <script>
+    var detId;
+
     $(document).ready(function () {
         var table = $('#user-table').dataTable({
             "order": []
         });
     });
+    function gotoUpdate() {
+        UpdateModel(detId);
+    }
+
 
     function UpdateModel(id) {
-        console.log(id);
+        $.ajax({
+            type: "POST",
+            url: "/SystemUsers/EditValue/" + id,
+            dataType: 'json',
+            async: false,
+            success: function (result) {
+                $('#updateId').val(id);
+                $('#updateFullName').val(result.FullName);
+                $('#updateEmail').val(result.Email);
+                $('#updateStatus').val(result.Status);
+                $('#updateModal').modal('show');
+            },
+            error: function () {
+                alert('Failed');
+            }
+        });
     }
 
     function ViewModel(id) {
+        detId = id;
         $.ajax({
             type: "POST",
             url: "/SystemUsers/Details/" + id,
@@ -260,9 +352,6 @@
                         }
                     });
                 }
-                else {
-                    console.log('Null');
-                }
 
             },
             error: function () {
@@ -274,6 +363,9 @@
     function show_add() {
         $('#addModal').modal('show');
     }
+
+
+
 
     $(document).ready(function () {
         $("#add-button").click(function () {
@@ -291,10 +383,10 @@
                     async: false,
                     success: function (result) {
                         if (result == 1) {
-                            window.location.href = '/SystemUsers?msg=1';
+                            window.location.href = '/SystemUsers';
                         }
                         else {
-                            $('#error-span').html('Error in insert. Make sure e-mail is not duplicate.');
+                            $('#error-span').html('Error in insert. This e-mail maybe used before.');
                         }
                     },
                     error: function () {
@@ -353,6 +445,76 @@
                         identical: {
                             field: 'Password',
                             message: 'The password and its confirm are not the same'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.form.bv', function (e) {
+            $('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ...
+            $('#reg_form').data('bootstrapValidator').resetForm();
+            e.preventDefault();
+            var $form = $(e.target);
+            var bv = $form.data('bootstrapValidator');
+            $.post($form.attr('action'), $form.serialize(), function (result) {
+                console.log(result);
+            }, 'json');
+        });
+
+
+
+        $("#update-button").click(function () {
+            var validator = $('#update-form').data('bootstrapValidator');
+            validator.validate();
+            if (validator.isValid()) {
+                var data = $('#update-form').serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/SystemUsers/Edit",
+                    data: data,
+                    async: false,
+                    success: function (result) {
+                        if (result == 1) {
+                            window.location.href = '/SystemUsers';
+                        }
+                        else {
+                            $('#error-span2').html('Error in update. This e-mail maybe used before.');
+                        }
+                    },
+                    error: function () {
+                        alert('Failed');
+                    }
+                });
+            }
+            else {
+                return false;
+            }
+        });
+        var validate = $('#update-form').bootstrapValidator({
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                FullName: {
+                    validators: {
+                        stringLength: {
+                            min: 5,
+                        },
+                        notEmpty: {
+                            message: 'Please supply your full name'
+                        }
+                    }
+                },
+                Email: {
+                    validators: {
+                        notEmpty: {
+                            message: 'Please supply your email address'
+                        },
+                        emailAddress: {
+                            message: 'Please supply a valid email address'
                         }
                     }
                 }
