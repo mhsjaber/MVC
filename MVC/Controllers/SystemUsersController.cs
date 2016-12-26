@@ -13,9 +13,8 @@ namespace MVC.Controllers
     {
         private GarmentsManagementEntities2 db = new GarmentsManagementEntities2();
         
-        public ActionResult Index(string msg="")
+        public ActionResult Index()
         {
-            ViewBag.Message = msg;
             var systemUsers = db.SystemUsers
                     .Include(s => s.SystemUser1)
                     .Select(s => new SystemUserViewModel

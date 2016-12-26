@@ -78,19 +78,17 @@
                         </a>
                     </li>
                     <li class="treeview">
-                        <a href="@Url.Action("Contact", "Home")">
-                            <i class="fa fa-phone"></i> <span>Contact</span>
+                        <a href="#">
+                            <i class="fa fa-cogs"></i>
+                            <span>Settings</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
                         </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="@Url.Action("About", "Home")">
-                            <i class="fa fa-info"></i> <span>About</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="@Url.Action("Index", "SystemUsers")">
-                            <i class="fa fa-users"></i> <span>Users</span>
-                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("Index", "SystemUsers")"><i class="fa fa-circle-o"></i> Users</a></li>
+                            <li><a href="@Url.Action("Index", "FabricDetails")"><i class="fa fa-circle-o"></i> Fabrics</a></li>
+                        </ul>
                     </li>
                 </ul>
             </section>
