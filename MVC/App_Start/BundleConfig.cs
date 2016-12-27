@@ -21,7 +21,8 @@ namespace MVC
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Content/date.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/customjs").Include(
                       "~/CustomContent/plugins/sparkline/jquery.sparkline.min.js",
@@ -29,7 +30,6 @@ namespace MVC
                       "~/CustomContent/plugins/jvectormap/jquery-jvectormap-world-mill-en.js",
                       "~/CustomContent/plugins/knob/jquery.knob.js",
                       "~/CustomContent/plugins/daterangepicker/daterangepicker.js",
-                      "~/CustomContent/plugins/datepicker/bootstrap-datepicker.js",
                       "~/CustomContent/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js",
                       "~/CustomContent/plugins/slimScroll/jquery.slimscroll.min.js",
                       "~/CustomContent/plugins/fastclick/fastclick.js",

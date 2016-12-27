@@ -14,7 +14,7 @@ namespace MVC.Controllers
 {
     public class EmployeesController : Controller
     {
-        private GarmentsManagementEntities db = new GarmentsManagementEntities();
+        private GarmentsManagementEntities1 db = new GarmentsManagementEntities1();
 
         public ActionResult Index()
         {
@@ -35,7 +35,7 @@ namespace MVC.Controllers
                     FirstName = e.FirstName,
                     LastName = e.LastName,
                     Mobile = e.Mobile,
-                    Email = e.Email,
+                    Gender = e.Gender,
                     Address = e.Address,
                     Image = e.Image,
                     EmployeeType = e.EmployeeType,
@@ -45,7 +45,7 @@ namespace MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Address,Email,LastName,FirstName,Mobile,UpdateDate,UpdatedBy,Status,EmployeeType,CreatedBy,CreateDate,DesignationId")] EmpDetail empDetail)
+        public ActionResult Create([Bind(Include = "Address,JoinDate,DoB,Gender,BloodGroup,Email,LastName,FirstName,Mobile,UpdateDate,UpdatedBy,Status,EmployeeType,CreatedBy,CreateDate,DesignationId")] EmpDetail empDetail)
         {
             try
             {
@@ -96,11 +96,47 @@ namespace MVC.Controllers
                         Address = e.Address,
                         Image = e.Image,
                         EmployeeType = e.EmployeeType,
-                        Designation = e.EmpDesignation.Name
+                        Designation = e.EmpDesignation.Name,
+                        JoinDate = e.JoinDate.ToString(),
+                        BloodGroup = e.BloodGroup,
+                        UpdateDate = e.UpdateDate.ToString(),
+                        EditedBy = e.SystemUser1.Email,
+                        Gender = e.Gender,
+                        DoB = e.DoB.ToString()
                     })
                     .Single();
             return Json(empDetails);
         }
+
+        [HttpPost]
+        public ActionResult EditValue(int? id)
+        {
+            if (id == null)
+            {
+                return Json(0);
+            }
+            var empDetails = db.EmpDetails
+                   .Include(s => s.SystemUser1)
+                   .Where(s => s.Id == id)
+                   .Select(e => new EmployeesViewModel
+                   {
+                       Id = e.Id,
+                       FirstName = e.FirstName,
+                       LastName = e.LastName,
+                       Mobile = e.Mobile,
+                       Email = e.Email,
+                       Address = e.Address,
+                       EmployeeType = e.EmployeeType,
+                       DesignationId = e.EmpDesignation.Id,
+                       JoinDate = e.JoinDate.ToString(),
+                       BloodGroup = e.BloodGroup,
+                       Gender = e.Gender,
+                       DoB = e.DoB.ToString()
+                   })
+                   .Single();
+            return Json(empDetails);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

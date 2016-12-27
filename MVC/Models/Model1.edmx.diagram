@@ -4,15 +4,15 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="de994a183575442da4852ecda45a269d" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="GarmentsManagementModel.BuyerDetail" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDesignation" Width="1.5" PointX="3" PointY="7.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDetail" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.FabricDetail" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.FabricStockOperation" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemTask" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUser" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUserTask" Width="1.5" PointX="5.25" PointY="13.375" IsExpanded="true" />
+      <Diagram DiagramId="96ff5fd05ec1411788c8d69f1869e7c5" Name="Diagram1" ZoomLevel="35">
+        <EntityTypeShape EntityType="GarmentsManagementModel.BuyerDetail" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDesignation" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.EmpDetail" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.FabricDetail" Width="1.5" PointX="3" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.FabricStockOperation" Width="1.5" PointX="8.25" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemTask" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUser" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="GarmentsManagementModel.SystemUserTask" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
         <AssociationConnector Association="GarmentsManagementModel.FK_BuyerDetails_SystemUsers" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_BuyerDetails_SystemUsers1" ManuallyRouted="false" />
         <AssociationConnector Association="GarmentsManagementModel.FK_EmpDesignations_SystemUsers" ManuallyRouted="false" />

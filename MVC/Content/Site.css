@@ -67,3 +67,28 @@
 .top-padding {
     padding-top: 7px;
 }
+
+.table-label {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 8px !important;
+    width: 20%;
+}
+
+.table-data{
+    padding-left: 8px !important;
+    width: 30%;
+}
+
+.modal-header, .modal-footer {
+    background-color: #ECF0F5 !important
+}
+
+.input-group-datepicker {
+    display: table;
+}
+
+.input-group-addon {
+    background-color: white !important;
+    border-radius: 0 !important
+}

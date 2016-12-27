@@ -13,10 +13,10 @@ namespace MVC.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class GarmentsManagementEntities : DbContext
+    public partial class GarmentsManagementEntities1 : DbContext
     {
-        public GarmentsManagementEntities()
-            : base("name=GarmentsManagementEntities")
+        public GarmentsManagementEntities1()
+            : base("name=GarmentsManagementEntities1")
         {
         }
     

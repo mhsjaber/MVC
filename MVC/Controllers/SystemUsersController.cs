@@ -11,7 +11,7 @@ namespace MVC.Controllers
 {
     public class SystemUsersController : Controller
     {
-        private GarmentsManagementEntities db = new GarmentsManagementEntities();
+        private GarmentsManagementEntities1 db = new GarmentsManagementEntities1();
         
         public ActionResult Index()
         {
@@ -26,7 +26,7 @@ namespace MVC.Controllers
                         UpdatedBy = s.UpdatedBy,
                         Id = s.Id,
                         Status = s.Status,
-                        EditedBy = s.SystemUser1.FullName + " ("+s.SystemUser1.Email+")"
+                        EditedBy = s.SystemUser1.Email
                     }).OrderBy(s => new { s.Status, s.FullName});
             return View(systemUsers);
         }
@@ -50,7 +50,7 @@ namespace MVC.Controllers
                         UpdatedBy = s.UpdatedBy,
                         Id = s.Id,
                         Status = s.Status,
-                        EditedBy = s.SystemUser1.FullName + " (" + s.SystemUser1.Email + ")"
+                        EditedBy = s.SystemUser1.Email
                     }).OrderBy(s => new { s.Status, s.FullName }).Single();
             return Json(systemUser);
         }
@@ -122,7 +122,7 @@ namespace MVC.Controllers
                     }).Single();
 
                 systemUser.Password = person.Password;
-                systemUser.UpdatedBy = null;
+                systemUser.UpdatedBy = 234;
 
                 if (ModelState.IsValid)
                 {

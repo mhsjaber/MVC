@@ -252,6 +252,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\date.js" />
     <Content Include="Content\Images\Users\user.png" />
     <Content Include="CustomContent\bootstrap\css\bootstrap.css" />
     <Content Include="CustomContent\bootstrap\css\bootstrap.min.css" />

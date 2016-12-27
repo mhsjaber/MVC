@@ -23,8 +23,8 @@ namespace MVC.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public System.DateTime CreateDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public int UpdatedBy { get; set; }
+        public int CreatedBy { get; set; }
+        public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdateDate { get; set; }
         public int Status { get; set; }
     

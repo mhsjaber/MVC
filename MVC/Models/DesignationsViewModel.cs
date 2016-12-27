@@ -15,5 +15,7 @@ namespace MVC.Models
         public int Status { get; internal set; }
         [Display(Name="Last Update")]
         public DateTime? UpdateDate { get; internal set; }
+        public DateTime CreateDate { get; internal set; }
+        public int CreatedById { get; internal set; }
     }
 }

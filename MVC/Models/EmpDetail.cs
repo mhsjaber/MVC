@@ -19,9 +19,13 @@ namespace MVC.Models
         public string LastName { get; set; }
         public string Mobile { get; set; }
         public string Email { get; set; }
+        public Nullable<System.DateTime> DoB { get; set; }
+        public string Gender { get; set; }
         public string Address { get; set; }
         public string Image { get; set; }
+        public string BloodGroup { get; set; }
         public string EmployeeType { get; set; }
+        public Nullable<System.DateTime> JoinDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public System.DateTime CreateDate { get; set; }
         public Nullable<int> UpdatedBy { get; set; }

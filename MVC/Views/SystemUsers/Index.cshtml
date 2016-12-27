@@ -240,36 +240,30 @@
                 <div class="form-group" style="text-align:center">
                     <img src="~/Content/Images/Users/user.png" style="width: 100px; height: 100px; border-radius: 50px" id="detailsImage"/>
                 </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Full Name</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsFullName"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">E-mail</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsEmail"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Last Update</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsLastUpdate"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Updated By</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsUpdatedBy"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Status</label>
-                    <div class="col-md-9 top-padding">
-                        <span id="detailsStatus"></span>
-                    </div>
-                </div>
+                <table class="table table-bordered table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="table-label">Full Name</td>
+                            <td class="table-data"><span id="detailsFullName"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">E-mail</td>
+                            <td class="table-data"><span id="detailsEmail"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">Last Update</td>
+                            <td class="table-data"><span id="detailsLastUpdate"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">Updated By</td>
+                            <td class="table-data"><span id="detailsUpdatedBy"></span></td>
+                        </tr>
+                        <tr>
+                            <td class="table-label">Status</td>
+                            <td class="table-data"><span id="detailsStatus"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

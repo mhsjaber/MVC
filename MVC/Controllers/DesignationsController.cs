@@ -13,7 +13,7 @@ namespace MVC.Controllers
 {
     public class DesignationsController : Controller
     {
-        private GarmentsManagementEntities db = new GarmentsManagementEntities();
+        private GarmentsManagementEntities1 db = new GarmentsManagementEntities1();
         
         public ActionResult Index()
         {
@@ -94,15 +94,15 @@ namespace MVC.Controllers
                 var des = db.EmpDesignations
                     .Include(s => s.SystemUser)
                     .Where(s => s.Id == empDesignation.Id)
-                    .Select(s => new FabricDetailsViewModel
+                    .Select(s => new DesignationsViewModel
                     {
                         CreateDate = s.CreateDate,
-                        CreatedBy = s.CreatedBy
+                        CreatedById = s.CreatedBy
                     })
                     .Single();
 
                 empDesignation.CreateDate = des.CreateDate;
-                empDesignation.CreatedBy = des.CreatedBy;
+                empDesignation.CreatedBy = des.CreatedById;
 
                 if (ModelState.IsValid)
                 {

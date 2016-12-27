@@ -31,8 +31,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
-          <Property Name="CreatedBy" Type="int" />
-          <Property Name="UpdatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdateDate" Type="datetime" />
           <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
@@ -45,9 +45,13 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Mobile" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="DoB" Type="date" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="10" />
           <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="BloodGroup" Type="nvarchar" MaxLength="50" />
           <Property Name="EmployeeType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="JoinDate" Type="date" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
@@ -150,7 +154,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmpDesignations_SystemUsers">
-          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="1" />
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
           <End Role="EmpDesignations" Type="Self.EmpDesignations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SystemUsers">
@@ -162,7 +166,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmpDesignations_SystemUsers1">
-          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="0..1" />
+          <End Role="SystemUsers" Type="Self.SystemUsers" Multiplicity="1" />
           <End Role="EmpDesignations" Type="Self.EmpDesignations" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SystemUsers">
@@ -472,8 +476,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdateDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SystemUser" Relationship="Self.FK_EmpDesignations_SystemUsers" FromRole="EmpDesignations" ToRole="SystemUsers" />
@@ -489,9 +493,13 @@
           <Property Name="LastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Mobile" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DoB" Type="DateTime" Precision="0" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BloodGroup" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EmployeeType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="JoinDate" Type="DateTime" Precision="0" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
@@ -627,7 +635,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmpDesignations_SystemUsers">
-          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="1" />
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
           <End Role="EmpDesignations" Type="Self.EmpDesignation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SystemUsers">
@@ -639,7 +647,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_EmpDesignations_SystemUsers1">
-          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="0..1" />
+          <End Role="SystemUsers" Type="Self.SystemUser" Multiplicity="1" />
           <End Role="EmpDesignations" Type="Self.EmpDesignation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SystemUsers">
@@ -830,7 +838,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="GarmentsManagementEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="GarmentsManagementEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BuyerDetails" EntityType="Self.BuyerDetail" />
           <EntitySet Name="EmpDesignations" EntityType="Self.EmpDesignation" />
           <EntitySet Name="EmpDetails" EntityType="Self.EmpDetail" />
@@ -921,7 +929,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="GarmentsManagementModelStoreContainer" CdmEntityContainer="GarmentsManagementEntities">
+        <EntityContainerMapping StorageEntityContainer="GarmentsManagementModelStoreContainer" CdmEntityContainer="GarmentsManagementEntities1">
           <EntitySetMapping Name="BuyerDetails">
             <EntityTypeMapping TypeName="GarmentsManagementModel.BuyerDetail">
               <MappingFragment StoreEntitySet="BuyerDetails">
@@ -963,9 +971,13 @@
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Mobile" ColumnName="Mobile" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DoB" ColumnName="DoB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="BloodGroup" ColumnName="BloodGroup" />
                 <ScalarProperty Name="EmployeeType" ColumnName="EmployeeType" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
                 <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />

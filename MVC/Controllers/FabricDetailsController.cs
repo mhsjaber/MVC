@@ -14,7 +14,7 @@ namespace MVC.Controllers
 {
     public class FabricDetailsController : Controller
     {
-        private GarmentsManagementEntities db = new GarmentsManagementEntities();
+        private GarmentsManagementEntities1 db = new GarmentsManagementEntities1();
         
         public ActionResult Index()
         {
@@ -70,7 +70,7 @@ namespace MVC.Controllers
             {
                 return Json(0);
             }
-            var systemUser = db.FabricDetails
+            var fabricDetail = db.FabricDetails
                     .Include(s => s.SystemUser)
                     .Where(s => s.Id == id)
                     .Select(s => new FabricDetailsViewModel
@@ -80,7 +80,7 @@ namespace MVC.Controllers
                         Description = s.Description,
                         Status = s.Status
                     }).OrderBy(s => new { s.Status, s.FabricName }).Single();
-            return Json(systemUser);
+            return Json(fabricDetail);
         }
 
 
