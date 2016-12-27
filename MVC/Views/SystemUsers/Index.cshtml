@@ -282,7 +282,7 @@
 
 <script>
     var detId;
-
+    var click = true;
     $(document).ready(function () {
         var table = $('#user-table').dataTable({
             "order": []
@@ -294,6 +294,7 @@
 
 
     function UpdateModel(id) {
+        click = true;
         $.ajax({
             type: "POST",
             url: "/SystemUsers/EditValue/" + id,
@@ -359,6 +360,7 @@
     }
 
     function show_add() {
+        click = true;
         $('#addModal').modal('show');
     }
 
@@ -366,13 +368,12 @@
 
 
     $(document).ready(function () {
-        $("#add-button:not('.clickadded')").click(function () {
-
-            $("#add-button").addClass("clickadded");
+        $("#add-button").click(function () {
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
+            if (validator.isValid() && click) {
 
+                click = false;
                 var data = $('#add-form').serialize();
 
                 $.ajax({
@@ -385,12 +386,12 @@
                             window.location.href = '/SystemUsers';
                         }
                         else {
-                            $("#add-button").removeClass("clickadded");
+                            click = true;
                             $('#error-span').html('Error in insert. This e-mail maybe used before.');
                         }
                     },
                     error: function () {
-                        $("#add-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });
@@ -464,11 +465,12 @@
 
 
 
-        $("#update-button:not('.clickadded')").click(function () {
+        $("#update-button").click(function () {
             $("#update-button").addClass("clickadded");
             var validator = $('#update-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
+            if (validator.isValid() && click) {
+                click = false;
                 var data = $('#update-form').serialize();
 
                 $.ajax({
@@ -481,12 +483,12 @@
                             window.location.href = '/SystemUsers';
                         }
                         else {
-                            $("#update-button").removeClass("clickadded");
+                            click = true;
                             $('#error-span2').html('Error in update. This e-mail maybe used before.');
                         }
                     },
                     error: function () {
-                        $("#update-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });

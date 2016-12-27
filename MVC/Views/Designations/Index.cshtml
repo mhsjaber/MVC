@@ -182,7 +182,9 @@
         var table = $('.table').dataTable();
     });
 
+    var click = true;
     function UpdateModel(id) {
+        click = true;
         $.ajax({
             type: "POST",
             url: "/Designations/EditValue/" + id,
@@ -201,16 +203,17 @@
     }
 
     function show_add() {
+        click = true;
         $('#addModal').modal('show');
     }
 
     $(document).ready(function () {
-        $("#add-button:not('.clickadded')").on('click', function () {
+        $("#add-button").on('click', function () {
 
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
-                $("#add-button").addClass("clickadded");
+            if (validator.isValid() && click) {
+                click = false;
 
                 var data = $('#add-form').serialize();
                 $.ajax({
@@ -224,12 +227,12 @@
                             window.location.href = '/Designations';
                         }
                         else {
-                            $("#add-button").removeClass("clickadded");
+                            click = true;
                             $('#error-span').html('Error in insert.');
                         }
                     },
                     error: function () {
-                        $("#add-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });
@@ -274,8 +277,8 @@
         $("#update-button:not('.clickadded')").one('click', function () {
             var validator = $('#update-form').data('bootstrapValidator');
             validator.validate();
-            if (validator.isValid()) {
-                $("#update-button").removeClass("clickadded");
+            if (validator.isValid() && click) {
+                click = false;
                 var data = $('#update-form').serialize();
                 $.ajax({
                     type: "POST",
@@ -287,12 +290,12 @@
                             window.location.href = '/Designations';
                         }
                         else {
-                            $("#update-button").removeClass("clickadded");
+                            click = true;
                             $('#error-span2').html('Error in update.');
                         }
                     },
                     error: function () {
-                        $("#update-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });

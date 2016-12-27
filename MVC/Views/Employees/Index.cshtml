@@ -413,7 +413,7 @@
     $(document).ready(function () {
         $('.datepicker').datepicker();
 
-        $("#add-button:not('.clickadded')").click(function () {
+        $("#add-button").click(function () {
             var validator = $('#add-form').data('bootstrapValidator');
             validator.validate();
 
@@ -533,6 +533,7 @@
             var validator = $('#update-form').data('bootstrapValidator');
             validator.validate();
             if (validator.isValid() && click) {
+                click = false;
                 var data = $('#update-form').serialize();
 
                 $.ajax({
@@ -546,12 +547,12 @@
                             window.location.href = '/FabricDetails';
                         }
                         else {
-                            $("#update-button").removeClass("clickadded");
+                            click = true;
                             $('#error-span2').html('Error in update. This CODE maybe used before.');
                         }
                     },
                     error: function () {
-                        $("#update-button").removeClass("clickadded");
+                        click = true;
                         alert('Failed');
                     }
                 });
